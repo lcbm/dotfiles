@@ -1,0 +1,78 @@
+#!/usr/bin/env bash
+
+# TODO! move folder to their directory using https://www.gnu.org/software/stow/
+
+# additional packages
+PACMAN_PKGS="diff-so-fancy opera zsh xclip docker docker-compose go powerline-fonts noto-fonts-emoji meld jre-openjdk jdk-openjdk shellcheck"
+AUR_PKGS="slack-desktop antibody visual-studio-code-bin github-cli mendeleydesktop-bundled urxvt-tabbedex-git"
+
+setup_pkgs() {
+  info "setup pkgs"
+
+  pacman -Syyuu --noconfirm "${PACMAN_PKGS}" &&
+  yay -Syyuu --noconfirm "${AUR_PKGS}"
+
+  success 'pkgs'
+}
+
+setup_gitconfig() {
+  info 'setup gitconfig'
+
+  user ' - What is your git author name?'
+  read -r user_name
+  user ' - What is your git author email?'
+  read -r user_email
+  user ' - What editor do you want git to use?'
+  read -r editor
+
+  git config --global user.name "$user_name"
+  git config --global user.email "$user_email"
+  git config --global core.editor "$editor"
+
+  # source: https://github.com/so-fancy/diff-so-fancy
+  git config --global core.pager "diff-so-fancy | less --tabs=4 -RFX"
+
+  git config --global color.ui true
+
+  git config --global color.diff-highlight.oldNormal    "red bold"
+  git config --global color.diff-highlight.oldHighlight "red bold 52"
+  git config --global color.diff-highlight.newNormal    "green bold"
+  git config --global color.diff-highlight.newHighlight "green bold 22"
+
+  git config --global color.diff.meta       "11"
+  git config --global color.diff.frag       "magenta bold"
+  git config --global color.diff.commit     "yellow bold"
+  git config --global color.diff.old        "red bold"
+  git config --global color.diff.new        "green bold"
+  git config --global color.diff.whitespace "red reverse"
+
+  success 'gitconfig'
+}
+
+setup_dotfiles() {
+  info "setup dotfiles"
+
+  xrdb -merge ./.Xresources
+
+  success 'dotfiles'
+}
+
+setup_docker() {
+  info "setup docker"
+
+  sudo groupadd docker &&
+  sudo usermod -aG docker "$USER" &&
+  newgrp docker &&
+  sudo systemctl enable docker
+
+  success 'docker'
+}
+
+main() {
+  setup_pkgs &&
+  setup_gitconfig &&
+  setup_dotfiles &&
+  setup_docker
+
+  success 'main'
+}
