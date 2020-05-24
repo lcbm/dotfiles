@@ -1,0 +1,7 @@
+# Personal aliases
+alias vpnc="sudo openvpn --script-security 3 --config ~/Documents/cesar/cesar.ovpn --auth-retry interact --auth-user-pass ~/Documents/cesar/credentials.txt"
+alias f="fuck"
+alias glo="git log --oneline"
+alias gri="git rebase -i --root $tip"
+alias grc="git rebase --continue"
+alias gcn="git commit --amend --no-edit"

@@ -1,0 +1,27 @@
+# ZSH (shell)
+HISTFILE=~/.zsh/zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+
+setopt INC_APPEND_HISTORY
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_REDUCE_BLANKS
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_VERIFY
+setopt HIST_EXPIRE_DUPS_FIRST
+
+# ANTIBODY (plugin manager): '$ antibody bundle < ~/.zsh/zsh_plugins.txt > ~/.zsh/zsh_plugins.sh'
+source ~/.zsh/zsh_plugins.sh
+
+# PURE (theme)
+PURE_PROMPT_SYMBOL='λ'
+
+# URXVT (terminal emulator)
+bindkey "^[Ob" backward-word
+bindkey "^[Oc" forward-word
+
+# Alacritty (terminal emulator)
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1;5D" backward-word
+bindkey '^H' backward-delete-word

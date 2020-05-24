@@ -1,0 +1,14 @@
+# Generate static config with: $ antibody bundle < ~/.zsh/zsh_plugins.txt > ~/.zsh/zsh_plugins.sh
+caarlos0/git-add-remote kind:path
+caarlos0/ports kind:path
+caarlos0/zsh-mkc
+caarlos0/jvm
+lukechilds/zsh-nvm
+mafredri/zsh-async
+Tarrasch/zsh-bd
+zsh-users/zsh-completions
+zsh-users/zsh-autosuggestions
+
+sindresorhus/pure
+zdharma/fast-syntax-highlighting
+zsh-users/zsh-history-substring-search
