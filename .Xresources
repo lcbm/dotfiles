@@ -1,0 +1,124 @@
+! ---------------------------------------------------------------------------- !
+! URxvt
+! ---------------------------------------------------------------------------- !
+! Reload:       '$ xrdb -merge ~/.Xresources'
+! Dependencies: '$ yay -S urxvt-tabbedex-git'
+! Key output:   '$ cat -v'
+! References:
+! - https://wiki.archlinux.jp/index.php/Rxvt-unicode/ヒントとテクニック
+! - https://addy-dclxvi.github.io/post/configuring-urxvt/
+! - https://hellricer.github.io/2019/05/21/ctrl-arrows-in-terminal.html
+! ---------------------------------------------------------------------------- !
+
+URxvt*termName:                 rxvt-256color
+URxvt*imLocale:                 pt_BR.UTF-8
+URxvt*geometry:                 92x24
+URxvt*saveline:                 2048
+URxvt*lineSpace:                0
+URxvt*letterSpace:              0
+URxvt*internalBorder:           24
+URxvt*externalBorder:           0
+URxvt*depth:                    32
+URxvt*borderLess:               false
+URxvt*scrollBar:                false
+URxvt*scrollBar_right:          false
+URxvt*scrollTtyOutput:          false
+URxvt*scrollWithBuffer:         true
+URxvt*scrollTtyKeypress:        true
+URxvt.urgentOnBell:             true
+URxvt*cursorUnderline:          false
+URxvt*cursorBlink:              false
+URxvt*iso14755:                 false
+URxvt*iso14755_52:              false
+URxvt*buffered:                 true
+
+! -- Colors -- !
+! Dracula Xresources palette
+URxvt*.foreground:            #F8F8F2
+URxvt*.background:            [95]#282A36
+URxvt*.color0:                #282A36
+URxvt*.color8:                #4D4D4D
+URxvt*.color1:                #FF5555
+URxvt*.color9:                #FF6E67
+URxvt*.color2:                #50FA7B
+URxvt*.color10:               #5AF78E
+URxvt*.color3:                #F1FA8C
+URxvt*.color11:               #F4F99D
+URxvt*.color4:                #BD93F9
+URxvt*.color12:               #CAA9FA
+URxvt*.color5:                #FF79C6
+URxvt*.color13:               #FF92D0
+URxvt*.color6:                #8BE9FD
+URxvt*.color14:               #9AEDFE
+URxvt*.color7:                #BFBFBF
+URxvt*.color15:               #E6E6E6
+
+! Hyper-Snazzy Xresources palette
+! URxvt*foreground:               #eff0eb
+! URxvt*background:               [95]#282a36
+! URxvt*cursorColor:              #97979b
+!
+! URxvt*color0:                   #282a36
+! URxvt*color8:                   #686868
+! URxvt*color1:                   #ff5c57
+! URxvt*color9:                   #ff5c57
+! URxvt*color2:                   #5af78e
+! URxvt*color10:                  #5af78e
+! URxvt*color3:                   #f3f99d
+! URxvt*color11:                  #f3f99d
+! URxvt*color4:                   #57c7ff
+! URxvt*color12:                  #57c7ff
+! URxvt*color5:                   #ff6ac1
+! URxvt*color13:                  #ff6ac1
+! URxvt*color6:                   #9aedfe
+! URxvt*color14:                  #9aedfe
+! URxvt*color7:                   #eff0eb
+! URxvt*color15:                  #f1f1f0
+
+! -- Fonts -- !
+URxvt*Xft.dpi:                  96
+URxvt*Xft.rgba:                 rgb
+URxvt*Xft.antialias:            true
+URxvt*Xft.hinting:              true
+URxvt*Xft.hintstyle:            hintslight
+URxvt*Xft.autohint:             false
+URxvt*Xft.lcdfilter:            lcddefault
+
+URxvt*font:                     xft:Fira Code:pixelsize=14
+URxvt*imFont:                   xft:Fira Code:regular:size=14
+URxvt*boldFont:                 xft:Fira Code:bold:size=14
+URxvt*italicFont:               xft:Fira Code:italic:size=14
+URxvt*boldItalicFont:           xft:Fira Code:regular:size=14
+
+! --  Keybinds -- !
+URxvt*keysym.C-Up:              \^[Oa
+URxvt*keysym.C-Down:            \^[Od
+URxvt*keysym.C-Left:            \^[Ob
+URxvt*keysym.C-Right:           \^[Oc
+
+! --  Extensions -- !
+URxvt*perl-ext-common:          default,matcher,clipboard,url-select,keyboard-select,tabbedex
+
+! --  Macros -- !
+URxvt*copyCommand:              xclip -i -selection clipboard
+URxvt*pasteCommand:             xclip -o -selection clipboard
+URxvt*keysym.M-c:               perl:clipboard:copy
+URxvt*keysym.M-v:               perl:clipboard:paste
+URxvt*keysym.M-C-v:             perl:clipboard:paste_escaped
+URxvt*keysym.M-Escape:          perl:keyboard-select:activate
+URxvt*keysym.M-s:               perl:keyboard-select:search
+URxvt*keysym.M-u:               perl:url-select:select_next
+URxvt*urlLauncher:              opera
+URxvt*underlineURLs:            true
+URxvt*urlButton:                1
+
+! --  Tabbed -- !
+URxvt*tabbed.tabbar-fg :        4
+URxvt*tabbed.tabbar-bg :        0
+URxvt*tabbed.tab-fg :           4
+URxvt*tabbed.tab-bg :           0
+URxvt*tabbed.no-tabbedex-keys:  true
+URxvt*keysym.Shift-Left:        perl:tabbedex:prev_tab
+URxvt*keysym.Shift-Right:       perl:tabbedex:next_tab
+URxvt*keysym.Shift-Down:        perl:tabbedex:new_tab
+URxvt*keysym.Shift-Up:          perl:tabbedex:rename_tab
