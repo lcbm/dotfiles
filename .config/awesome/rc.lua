@@ -20,7 +20,6 @@ local ipairs, string, os, table, tostring, tonumber, type = ipairs, string, os, 
 local gears         = require("gears") --Utilities such as color parsing and objects
 local awful         = require("awful") --Everything related to window managment
                       require("awful.autofocus")
-
 -- Widget and layout library
 local wibox         = require("wibox")
 
@@ -32,6 +31,7 @@ local naughty       = require("naughty")
 naughty.config.defaults['icon_size'] = 100
 
 --local menubar       = require("menubar")
+
 local lain          = require("lain")
 local freedesktop   = require("freedesktop")
 
@@ -252,7 +252,7 @@ screen.connect_signal("property::geometry", function(s)
         if type(wallpaper) == "function" then
             wallpaper = wallpaper(s)
         end
-        gears.wallpaper.fit(wallpaper, s, "#FFFFFF")
+        gears.wallpaper.maximized(wallpaper, s, true)
     end
 end)
 
