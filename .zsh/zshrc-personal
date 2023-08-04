@@ -1,5 +1,7 @@
 # ZSH (shell)
-HISTFILE=~/.zsh/zsh_history
+ZDOTDIR=~/.zsh
+
+HISTFILE="${ZDOTDIR}/zsh_history"
 HISTSIZE=10000
 SAVEHIST=10000
 
@@ -11,11 +13,18 @@ setopt HIST_IGNORE_SPACE
 setopt HIST_VERIFY
 setopt HIST_EXPIRE_DUPS_FIRST
 
-# ANTIBODY (plugin manager): '$ antibody bundle < ~/.zsh/zsh_plugins.txt > ~/.zsh/zsh_plugins.sh'
-source ~/.zsh/zsh_plugins.sh
+# ANTIDOTE (plugin manager)
+[[ -e ~/.antidote ]] || git clone https://github.com/mattmc3/antidote.git ~/.antidote
 
-# PURE (theme)
-PURE_PROMPT_SYMBOL='λ'
+ZSH_PLUGINS=${ZDOTDIR:-$HOME}/zsh_plugins
+if [[ ! ${ZSH_PLUGINS}.zsh -nt ${ZSH_PLUGINS}.txt ]]; then
+  (
+    source ~/.antidote/antidote.zsh
+    antidote bundle < "${ZSH_PLUGINS}.txt" > "${ZSH_PLUGINS}.zsh"
+  )
+fi
+
+source "${ZSH_PLUGINS}.zsh"
 
 # URXVT (terminal emulator)
 bindkey "^[Ob" backward-word
@@ -25,3 +34,12 @@ bindkey "^[Oc" forward-word
 bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
 bindkey '^H' backward-delete-word
+
+# Starship (prompt)
+eval "$(starship init zsh)"
+
+# Node Version Manager
+source /usr/share/nvm/init-nvm.sh
+
+# Golang
+export PATH="$PATH:$(go env GOPATH)/bin"
