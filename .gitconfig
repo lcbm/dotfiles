@@ -1,0 +1,9 @@
+[user]
+	email = leonardo.melo@rockspoon.com
+	name = Leonardo Melo
+[core]
+	editor = vim
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+[fetch]
+	prune = true
