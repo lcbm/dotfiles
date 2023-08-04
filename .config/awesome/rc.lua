@@ -1,25 +1,11 @@
---[[
-
-     Awesome WM configuration template
-     https://github.com/awesomeWM
-
-     Freedesktop : https://github.com/lcpz/awesome-freedesktop
-
-     Copycats themes : https://github.com/lcpz/awesome-copycats
-
-     lain : https://github.com/lcpz/lain
-
---]]
-
--- {{{ Required libraries
 local awesome, client, mouse, screen, tag = awesome, client, mouse, screen, tag
 local ipairs, string, os, table, tostring, tonumber, type = ipairs, string, os, table, tostring, tonumber, type
 
---https://awesomewm.org/doc/api/documentation/05-awesomerc.md.html
 -- Standard awesome library
 local gears         = require("gears") --Utilities such as color parsing and objects
 local awful         = require("awful") --Everything related to window managment
                       require("awful.autofocus")
+
 -- Widget and layout library
 local wibox         = require("wibox")
 
@@ -30,8 +16,6 @@ local beautiful     = require("beautiful")
 local naughty       = require("naughty")
 naughty.config.defaults['icon_size'] = 100
 
---local menubar       = require("menubar")
-
 local lain          = require("lain")
 local freedesktop   = require("freedesktop")
 
@@ -41,8 +25,6 @@ local hotkeys_popup = require("awful.hotkeys_popup").widget
                       require("awful.hotkeys_popup.keys")
 local my_table      = awful.util.table or gears.table -- 4.{0,1} compatibility
 local dpi           = require("beautiful.xresources").apply_dpi
--- }}}
-
 
 
 -- {{{ Error handling
@@ -70,7 +52,6 @@ end
 -- }}}
 
 
-
 -- {{{ Autostart windowless processes
 local function run_once(cmd_arr)
     for _, cmd in ipairs(cmd_arr) do
@@ -81,6 +62,7 @@ end
 run_once({ "unclutter -root" }) -- entries must be comma-separated
 -- }}}
 
+
 -- This function implements the XDG autostart specification
 --[[
 awful.spawn.with_shell(
@@ -90,11 +72,10 @@ awful.spawn.with_shell(
     'dex --environment Awesome --autostart --search-paths "$XDG_CONFIG_DIRS/autostart:$XDG_CONFIG_HOME/autostart"' -- https://github.com/jceb/dex
 )
 --]]
-
 -- }}}
 
--- {{{ Variable definitions
 
+-- {{{ Variable definitions
 local themes = {
     "multicolor",  -- 1
 }
@@ -121,7 +102,6 @@ local terminal          = "alacritty"
 -- awesome variables
 awful.util.terminal = terminal
 awful.util.tagnames = {  "➊", "➋", "➌", "➍", "➎", "➏", "➐", "➑", "➒", "➓" }
--- Use this : https://fontawesome.com/cheatsheet
 awful.layout.suit.tile.left.mirror = true
 awful.layout.layouts = {
     awful.layout.suit.tile,
@@ -235,9 +215,7 @@ awful.util.mymainmenu = freedesktop.menu.build({
     }
 })
 -- hide menu when mouse leaves it
---awful.util.mymainmenu.wibox:connect_signal("mouse::leave", function() awful.util.mymainmenu:hide() end)
-
---menubar.utils.terminal = terminal -- Set the Menubar terminal for applications that require it
+-- awful.util.mymainmenu.wibox:connect_signal("mouse::leave", function() awful.util.mymainmenu:hide() end)
 -- }}}
 
 
@@ -294,7 +272,7 @@ globalkeys = my_table.join(
     function ()
         awful.spawn(string.format("dmenu_run -i -nb '#191919' -nf '#bf829c' -sb '#bf829c' -sf '#191919' -fn NotoMonoRegular:bold:pixelsize=14",
         beautiful.bg_normal, beautiful.fg_normal, beautiful.bg_focus, beautiful.fg_focus))
-	end,
+    end,
     {description = "show dmenu", group = "hotkeys"}),
 
 
@@ -303,20 +281,17 @@ globalkeys = my_table.join(
         {description = "rofi" , group = "function keys" }),
 
     -- super + ...
-    awful.key({ modkey }, "a", function () awful.util.spawn( "xfce4-appfinder" ) end,
-        {description = "appfinder", group = "super"}),
-    awful.key({ modkey }, "e", function () awful.util.spawn( editorgui ) end,
-        {description = "run gui editor", group = "super"}),
-    awful.key({ modkey }, "h", function () awful.util.spawn( "urxvt -T 'htop task manager' -e htop" ) end,
+    awful.key({ modkey }, "h", function () awful.util.spawn( "alacritty -T 'htop task manager' -e htop" ) end,
         {description = "htop", group = "super"}),
     awful.key({ modkey }, "f", function () awful.util.spawn( filemanager ) end,
         {description = filemanager, group = "super"}),
     awful.key({ modkey }, "p", function () awful.screen.focused().mypromptbox:run() end,
         {description = "prompt", group = "super"}),
+    -- TODO: find task manager
     awful.key({ modkey }, "t", function () awful.util.spawn("xfce4-taskmanager") end,
         {description = "task manager", group = "super"}),
     awful.key({ modkey }, "v", function () awful.util.spawn( "pavucontrol" ) end,
-        {description = "pulseaudio control", group = "super"}),
+        {description = "audio control", group = "super"}),
     awful.key({ modkey }, "x",  function () awful.util.spawn( "betterlockscreen -l dimblur -- --timestr='%H:%M'" ) end,
         {description = "lock screen", group = "hotkeys"}),
     awful.key({ modkey }, "Escape", function () awful.util.spawn( "xkill" ) end,
@@ -324,17 +299,15 @@ globalkeys = my_table.join(
 
 
     -- screenshots
-    awful.key({ }, "Print", function () awful.util.spawn("scrot 'ArcoLinux-%Y-%m-%d-%s_screenshot_$wx$h.jpg' -e 'mv $f $$(xdg-user-dir PICTURES)'") end,
+    awful.key({ }, "Print", function () awful.util.spawn("scrot '/home/leleco/Pictures/archlinux-%Y-%m-%d-%s_screenshot_$wx$h.png' -e 'xclip -selection clipboard -t image/png -i $f'") end,
         {description = "Scrot", group = "screenshots"}),
-    awful.key({ modkey1           }, "Print", function () awful.util.spawn( "xfce4-screenshooter" ) end,
-        {description = "Xfce screenshot", group = "screenshots"}),
-
+    awful.key({ modkey }, "s", function () awful.util.spawn("scrot -s '/home/leleco/Pictures/archlinux-%Y-%m-%d-%s_screenshot_$wx$h.png' -e 'xclip -selection clipboard -t image/png -i $f'") end,
+        {description = "Scrot", group = "screenshots"}),
     -- Personal keybindings}}}
 
 
     -- Hotkeys Awesome
-
-    awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
+    awful.key({ modkey, "Control" }, "s", hotkeys_popup.show_help,
         {description = "show help", group="awesome"}),
 
     -- Tag browsing with modkey
@@ -665,8 +638,7 @@ awful.rules.rules = {
           "Wpa_gui",
           "pinentry",
           "veromix",
-          "xtightvncviewer",
-          "Xfce4-terminal"},
+          "xtightvncviewer"},
 
         name = {
           "Event Tester",  -- xev.
@@ -681,14 +653,14 @@ awful.rules.rules = {
 
           -- Floating clients but centered in screen
     { rule_any = {
-       	class = {
-       		"Polkit-gnome-authentication-agent-1"
-				},
-				},
-      	properties = { floating = true },
-	      	callback = function (c)
-    		  awful.placement.centered(c,nil)
-       		end }
+           class = {
+               "Polkit-gnome-authentication-agent-1"
+                },
+                },
+          properties = { floating = true },
+              callback = function (c)
+              awful.placement.centered(c,nil)
+               end }
 }
 -- }}}
 
