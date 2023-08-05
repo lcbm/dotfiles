@@ -7,5 +7,5 @@ function run {
   fi
 }
 
-# run "xrandr --output HDMI1 --mode 25560x1440 --rate 144.0 --primary
 run "nm-applet"
+run "picom -b --config $HOME/.config/picom/picom.conf"
