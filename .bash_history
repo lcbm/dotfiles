@@ -73,4 +73,21 @@ cat /proc/cmdline # checks if changes were applied correctly
 btrfsck --init-extent-free
 btrfsck check --init-extent-free
 
+# Android Studio: Emulator from Command Line
+# - https://wiki.archlinux.org/title/android#Run_Android_apps_on_Arch_Linux
+#
+# This was required because of issues I was having with the emulator not starting from Android Studio:
+# - "qemu-system-x86_64: error while loading state for instance 0x0 of device 'kvm-tpr-opt'"
+paru -S android-emulator android-sdk-cmdline-tools-latest android-sdk-build-tools android-sdk-platform-tools android-platform
+sudo groupadd android-sdk
+sudo gpasswd -a $USER android-sdk
+sudo setfacl -R -m g:android-sdk:rwx /opt/android-sdk
+sudo setfacl -d -m g:android-sdk:rwX /opt/android-sdk
+newgrp android-sdk
+sdkmanager "system-images;android-29;google_apis_playstore;x86_64"
+avdmanager create avd -n SomeName -k "system-images;android-29;google_apis_playstore;x86_64" -d "Fixed POS/Kitchen/Runner"
+vim ~/.android/avd/SomeName.avd/config.ini # change hw.keyboard=yes
+emulator -avd SomeName
+adb install /path/to/my.apk
+
 # History
